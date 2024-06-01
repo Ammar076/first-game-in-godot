@@ -1,0 +1,143 @@
+[gd_scene load_steps=16 format=3 uid="uid://cs61wtk1kq83e"]
+
+[ext_resource type="Script" path="res://scripts/slime_purple.gd" id="1_7iq4i"]
+[ext_resource type="Texture2D" uid="uid://bwoec51f6mei0" path="res://assets/sprites/slime_purple.png" id="1_tay8o"]
+[ext_resource type="PackedScene" uid="uid://dtrbka1ef726o" path="res://scenes/killzone.tscn" id="2_ue0en"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_55kac"]
+atlas = ExtResource("1_tay8o")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wcagi"]
+atlas = ExtResource("1_tay8o")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ygif"]
+atlas = ExtResource("1_tay8o")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xc6c1"]
+atlas = ExtResource("1_tay8o")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svrx2"]
+atlas = ExtResource("1_tay8o")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3ihi"]
+atlas = ExtResource("1_tay8o")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1geiw"]
+atlas = ExtResource("1_tay8o")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hor1x"]
+atlas = ExtResource("1_tay8o")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f710a"]
+atlas = ExtResource("1_tay8o")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb1fo"]
+atlas = ExtResource("1_tay8o")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o4ikq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_55kac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wcagi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ygif")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xc6c1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_svrx2")
+}],
+"loop": false,
+"name": &"Lockin",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r3ihi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1geiw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hor1x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f710a")
+}],
+"loop": false,
+"name": &"Losetarget",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb1fo")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ynfr0"]
+size = Vector2(10, 13)
+
+[node name="SlimePurple" type="Node2D"]
+script = ExtResource("1_7iq4i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_o4ikq")
+animation = &"Losetarget"
+autoplay = "idle"
+frame = 3
+frame_progress = 1.0
+
+[node name="Killzone" parent="." instance=ExtResource("2_ue0en")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(-1, -6.5)
+shape = SubResource("RectangleShape2D_ynfr0")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, -6)
+target_position = Vector2(75, 0)
+collision_mask = 2
+
+[node name="RayCast2D3" type="RayCast2D" parent="."]
+position = Vector2(0, -6)
+target_position = Vector2(46, -20)
+collision_mask = 2
+
+[node name="RayCast2D4" type="RayCast2D" parent="."]
+position = Vector2(0, -6)
+target_position = Vector2(-47, -20)
+collision_mask = 2
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+position = Vector2(0, -6)
+target_position = Vector2(-70, -1)
+collision_mask = 2
+
+[node name="RayCastWall" type="RayCast2D" parent="."]
+position = Vector2(0, -6)
+target_position = Vector2(-8, 0)
+
+[node name="RayCastWall2" type="RayCast2D" parent="."]
+position = Vector2(0, -6)
+target_position = Vector2(8, 0)
+
+[connection signal="Player_dead" from="Killzone" to="." method="_on_killzone_player_dead"]
